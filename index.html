@@ -1,0 +1,72 @@
+<html>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">           <link rel="stylesheet" href="load.css">
+    <style>
+        #speedocontainer {
+            width: 256px;
+            height: 64px;
+            background-color: #171718;
+            border-radius: 13px 13px 0px 0px;
+            position: absolute;
+            left: 44%;
+            top: 90%;
+            display: none;
+        }
+
+        #speedoline {
+            width: 100%;
+            height: 4px;
+            background-color: #2070da;
+            top: 94%;
+            position: relative;
+            max-width: 100%;
+        }
+
+        #speedotext {
+            font-size: 25px;
+            font-family: Raleway;
+            color: white;
+            left: 32%;
+            top: 37%;
+            position: relative;
+        }
+    </style>
+    <div id="speedocontainer">
+        <div id="speedoline"></div>
+        <div id="speedotext">100 km/h</div>
+        <div id="speedotext" style="left: 35%; top: -38%; font-size: 10px;">2021 &hearts; State-V</div>
+        </div>
+
+        <script>
+$(function () {
+    function display(bool) {
+        if (bool) {
+            var x = document.getElementById("speedocontainer");
+            x.style.display = 'block';
+        } else {
+            var x = document.getElementById("speedocontainer");
+            x.style.display = 'none';
+        }
+    }
+
+    display(false)
+
+    window.addEventListener('message', function(event) {
+        var item = event.data;
+        if (item.type === "ui") {
+            if (item.status == true) {
+                display(true)
+            } else {
+                display(false)
+            }
+        }
+        if (item.type === "updatekmh") {
+                document.getElementById("speedotext").innerHTML = item.speed
+                var x = document.getElementById("speedoline")
+                x.style.width = item.speedwidth
+        }
+    })
+})
+        </script>
+</html>
